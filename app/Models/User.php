@@ -17,10 +17,18 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+     const STUDENT = 'student';
+     const TEACHER = 'teacher';
+     const ADMIN = 'admin';
+     const OLD_STUDENT = 'old_student';
+
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
