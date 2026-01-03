@@ -105,14 +105,14 @@
                             </div>
                         </form>
 
-                        <div class="mt-4 text-center">
+                        <!-- <div class="mt-4 text-center">
                             <small class="text-muted">
                                 Default Credentials:<br>
                                 <strong>Admin:</strong> admin@college.com / password<br>
                                 <strong>Teacher:</strong> teacher@college.com / password<br>
                                 <strong>Student:</strong> student@college.com / password
                             </small>
-                        </div>
+                        </div> -->
 
                         <div class="mt-3 text-center">
                             <p class="mb-0">
