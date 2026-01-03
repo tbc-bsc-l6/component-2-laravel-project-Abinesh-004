@@ -18,18 +18,16 @@ class User extends Authenticatable
      * @var list<string>
      */
 
-     const STUDENT = 'student';
-     const TEACHER = 'teacher';
-     const ADMIN = 'admin';
-     const OLD_STUDENT = 'old_student';
-
+     use Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role',
+        'user_role_id',
     ];
+
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -52,5 +50,52 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class, 'user_role_id');
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function teacherModules()
+    {
+        return $this->hasMany(TeacherModule::class);
+    }
+
+    // Helper methods
+    public function isAdmin()
+    {
+        return $this->role->role === 'admin';
+    }
+
+    public function isTeacher()
+    {
+        return $this->role->role === 'teacher';
+    }
+
+    public function isStudent()
+    {
+        return $this->role->role === 'student';
+    }
+
+    public function isOldStudent()
+    {
+        return $this->role->role === 'old_student';
+    }
+
+    // Get active enrollments
+    public function activeEnrollments()
+    {
+        return $this->enrollments()->where('status', 'enrolled');
+    }
+
+    // Get completed modules
+    public function completedEnrollments()
+    {
+        return $this->enrollments()->whereIn('status', ['pass', 'fail']);
     }
 }
