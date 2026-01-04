@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ModuleController;
+use App\Http\Controllers\Admin\StudentController;
 
 
 Route::get('/', function () {
@@ -35,6 +36,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/modules', [ModuleController::class, 'store'])->name('modules.store');
     Route::patch('/modules/{module}/toggle', [ModuleController::class, 'toggleAvailability'])->name('modules.toggle');
     Route::delete('/modules/{module}/students', [ModuleController::class, 'removeStudent'])->name('modules.remove-student');
+
+    // Students
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::patch('/students/{user}/change-role', [StudentController::class, 'changeRole'])->name('students.change-role');
     
 });
 
