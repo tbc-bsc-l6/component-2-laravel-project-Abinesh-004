@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ModuleController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Teacher\TeacherDashboardController;
+use App\Http\Controllers\Teacher\TeacherModuleController;
+use App\Http\Controllers\Teacher\StudentGradeController;
 
 
 Route::get('/', function () {
@@ -40,7 +44,21 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Students
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::patch('/students/{user}/change-role', [StudentController::class, 'changeRole'])->name('students.change-role');
+
+    // Teachers
+    Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
+    Route::get('/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
+    Route::post('/teachers', [TeacherController::class, 'store'])->name('teachers.store');
+    Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+    Route::post('/teachers/attach-module', [TeacherController::class, 'attachModule'])->name('teachers.attach-module');
+    Route::delete('/teachers/detach-module', [TeacherController::class, 'detachModule'])->name('teachers.detach-module');
     
+});
+// Teacher Routes
+Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/modules/{module}', [TeacherModuleController::class, 'show'])->name('modules.show');
+    Route::patch('/modules/{module}/enrollments/{enrollment}', [StudentGradeController::class, 'update'])->name('grades.update');
 });
 
 
