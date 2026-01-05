@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Teacher\TeacherDashboardController;
 use App\Http\Controllers\Teacher\TeacherModuleController;
 use App\Http\Controllers\Teacher\StudentGradeController;
+use App\Http\Controllers\Student\StudentDashboardController;
+
 
 
 Route::get('/', function () {
@@ -59,6 +61,10 @@ Route::middleware(['auth', 'teacher'])->prefix('teacher')->name('teacher.')->gro
     Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
     Route::get('/modules/{module}', [TeacherModuleController::class, 'show'])->name('modules.show');
     Route::patch('/modules/{module}/enrollments/{enrollment}', [StudentGradeController::class, 'update'])->name('grades.update');
+});
+// Student Routes
+Route::middleware(['auth', 'student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
 });
 
 
