@@ -7,6 +7,7 @@ use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
+
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
 
         // Seed realistic teachers and students
         $this->call([
+            ModulesSeeder::class,
             TeacherSeeder::class,
             StudentSeeder::class,
         ]);
