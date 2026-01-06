@@ -1,29 +1,17 @@
 <?php
-
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-        // $this->call(AdminSeeder::class);
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // Seed roles first
         $this->call(UserRoleSeeder::class);
 
         // Create admin user
@@ -38,5 +26,38 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+
+        // Optional: Create some sample data for testing
+        $teacherRole = UserRole::where('role', 'teacher')->first();
+        $studentRole = UserRole::where('role', 'student')->first();
+
+        // Sample teacher
+        User::firstOrCreate(
+            ['email' => 'teacher@college.com'],
+            [
+                'name' => 'John Teacher',
+                'password' => Hash::make('password'),
+                'user_role_id' => $teacherRole->id,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        // Sample student
+        User::firstOrCreate(
+            ['email' => 'student@college.com'],
+            [
+                'name' => 'Jane Student',
+                'password' => Hash::make('password'),
+                'user_role_id' => $studentRole->id,
+                'email_verified_at' => now(),
+            ]
+        );
+
+        // Seed realistic teachers and students
+        $this->call([
+            TeacherSeeder::class,
+            StudentSeeder::class,
+        ]);
     }
 }
+

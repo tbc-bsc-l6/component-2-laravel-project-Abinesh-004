@@ -18,7 +18,6 @@ class CheckStudent
         if (!auth()->check() || (!auth()->user()->isStudent() && !auth()->user()->isOldStudent())) {
             abort(403, 'Unauthorized access');
         }
-    
         return $next($request);
     }
 }
