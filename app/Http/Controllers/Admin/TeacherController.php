@@ -16,6 +16,11 @@ class TeacherController extends Controller
     {
         $query = User::with('teacherModules.module');
 
+        // Filter by role (teachers only)
+        $query->whereHas('role', function($q) {
+            $q->where('role', 'teacher');
+        });
+
         // Search functionality
         if ($request->has('search') && $request->search != '') {
             $searchTerm = $request->search;
@@ -25,9 +30,26 @@ class TeacherController extends Controller
             });
         }
 
-        $teachers = $query->whereHas('role', function($q) {
-            $q->where('role', 'teacher');
-        })->get();
+        // Filter by assigned module
+        if ($request->has('module_filter') && $request->module_filter != '') {
+            $query->whereHas('teacherModules', function($q) use ($request) {
+                $q->where('module_id', $request->module_filter);
+            });
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort_by', 'name');
+        $sortOrder = $request->get('sort_order', 'asc');
+
+        if ($sortBy === 'module_count') {
+            // Sort by module count using withCount
+            $query->withCount('teacherModules');
+            $teachers = $query->get()->sortBy('teacher_modules_count', SORT_REGULAR, $sortOrder === 'desc')->values();
+        } else {
+            // Sort by name or email
+            $query->orderBy($sortBy, $sortOrder);
+            $teachers = $query->get();
+        }
 
         $modules = Module::all();
 
