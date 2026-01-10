@@ -49,9 +49,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
     Route::get('/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
     Route::post('/teachers', [TeacherController::class, 'store'])->name('teachers.store');
-    Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+    
+    // Specific routes must come before wildcard routes like {teacher}
     Route::post('/teachers/attach-module', [TeacherController::class, 'attachModule'])->name('teachers.attach-module');
     Route::delete('/teachers/detach-module', [TeacherController::class, 'detachModule'])->name('teachers.detach-module');
+    
+    Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
     
     // Students
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
