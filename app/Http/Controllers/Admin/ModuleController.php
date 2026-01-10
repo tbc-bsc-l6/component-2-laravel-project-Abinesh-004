@@ -8,10 +8,19 @@ use App\Models\Module;
 
 class ModuleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $modules = Module::withCount(['activeStudents', 'teachers'])
-            ->orderBy('created_at', 'desc')
+        $query = Module::withCount(['activeStudents', 'teachers']);
+
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('module', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('slug', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $modules = $query->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('admin.modules.index', compact('modules'));

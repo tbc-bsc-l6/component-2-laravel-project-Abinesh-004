@@ -12,7 +12,17 @@
             <i class="bi bi-plus-circle"></i> Add New Module
         </a>
     </div>
+    </div>
     <div class="card-body">
+        <div class="mb-3">
+            <form action="{{ route('admin.modules.index') }}" method="GET" class="d-flex gap-2">
+                <input type="text" name="search" class="form-control" placeholder="Search modules..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+                @if(request('search'))
+                    <a href="{{ route('admin.modules.index') }}" class="btn btn-outline-secondary">Clear</a>
+                @endif
+            </form>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>

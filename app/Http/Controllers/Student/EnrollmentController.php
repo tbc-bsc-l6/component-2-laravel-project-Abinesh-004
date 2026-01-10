@@ -36,7 +36,10 @@ class EnrollmentController extends Controller
         // Search functionality
         if ($request->has('search') && $request->search != '') {
             $searchTerm = $request->search;
-            $query->where('module', 'like', '%' . $searchTerm . '%');
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('module', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('slug', 'like', '%' . $searchTerm . '%');
+            });
         }
 
         $availableModules = $query->get()
