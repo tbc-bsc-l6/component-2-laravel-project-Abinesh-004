@@ -33,6 +33,35 @@
                     <h5 class="mb-0">Available Modules</h5>
                 </div>
                 <div class="card-body">
+                    <!-- Search Form -->
+                    <form action="{{ route('student.enroll.index') }}" method="GET" class="mb-4">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="search" 
+                                   class="form-control" 
+                                   placeholder="Search modules by name..." 
+                                   value="{{ request('search') }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i> Search
+                            </button>
+                            @if(request('search'))
+                                <a href="{{ route('student.enroll.index') }}" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle"></i> Clear
+                                </a>
+                            @endif
+                        </div>
+                    </form>
+
+                    @if(request('search'))
+                        <div class="mb-3">
+                            <span class="badge bg-info">
+                                Search: {{ request('search') }}
+                                <a href="{{ route('student.enroll.index') }}" 
+                                   class="text-white text-decoration-none ms-1">×</a>
+                            </span>
+                        </div>
+                    @endif
+
                     @if($availableModules->count() > 0)
                         <div class="row g-4">
                             @foreach($availableModules as $module)

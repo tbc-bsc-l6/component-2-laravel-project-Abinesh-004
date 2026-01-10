@@ -10,7 +10,7 @@ use App\Models\Enrollment;
 
 class EnrollmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
@@ -30,9 +30,16 @@ class EnrollmentController extends Controller
             ->toArray();
 
         // Get available modules (not enrolled, available, not full)
-        $availableModules = Module::where('is_available', true)
-            ->whereNotIn('id', $enrolledModuleIds)
-            ->get()
+        $query = Module::where('is_available', true)
+            ->whereNotIn('id', $enrolledModuleIds);
+
+        // Search functionality
+        if ($request->has('search') && $request->search != '') {
+            $searchTerm = $request->search;
+            $query->where('module', 'like', '%' . $searchTerm . '%');
+        }
+
+        $availableModules = $query->get()
             ->filter(function($module) {
                 return !$module->isFull();
             });
