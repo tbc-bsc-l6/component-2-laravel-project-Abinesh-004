@@ -51,19 +51,32 @@ class StudentController extends Controller
         $sortOrder = $request->get('sort_order', 'asc');
 
         if ($sortBy === 'enrollment_count') {
-            // Sort by enrollment count using withCount
+            // Sort by enrollment count - need to get all first, then paginate manually
             $query->withCount('activeEnrollments');
-            $students = $query->get()->sortBy('active_enrollments_count', SORT_REGULAR, $sortOrder === 'desc')->values();
+            $allStudents = $query->get()->sortBy('active_enrollments_count', SORT_REGULAR, $sortOrder === 'desc')->values();
+            
+            // Manual pagination
+            $perPage = 10;
+            $currentPage = $request->get('page', 1);
+            $offset = ($currentPage - 1) * $perPage;
+            
+            $students = new \Illuminate\Pagination\LengthAwarePaginator(
+                $allStudents->slice($offset, $perPage)->values(),
+                $allStudents->count(),
+                $perPage,
+                $currentPage,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
         } elseif ($sortBy === 'role') {
-            // Sort by role through relationship
+            // Sort by role through relationship with pagination
             $query->join('user_roles', 'users.user_role_id', '=', 'user_roles.id')
                   ->orderBy('user_roles.role', $sortOrder)
                   ->select('users.*');
-            $students = $query->get();
+            $students = $query->paginate(10)->appends($request->query());
         } else {
-            // Sort by name or email
+            // Sort by name or email with pagination
             $query->orderBy($sortBy, $sortOrder);
-            $students = $query->get();
+            $students = $query->paginate(10)->appends($request->query());
         }
 
         return view('admin.students.index', compact('students'));

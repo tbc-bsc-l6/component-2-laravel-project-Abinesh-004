@@ -212,6 +212,18 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Links -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+                <p class="text-muted mb-0">
+                    Showing {{ $students->firstItem() ?? 0 }} to {{ $students->lastItem() ?? 0 }} of {{ $students->total() }} students
+                </p>
+            </div>
+            <div>
+                {{ $students->links() }}
+            </div>
+        </div>
     </div>
 </div>
 @endsection

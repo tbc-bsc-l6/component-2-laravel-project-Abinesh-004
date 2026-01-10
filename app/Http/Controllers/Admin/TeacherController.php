@@ -42,13 +42,26 @@ class TeacherController extends Controller
         $sortOrder = $request->get('sort_order', 'asc');
 
         if ($sortBy === 'module_count') {
-            // Sort by module count using withCount
+            // Sort by module count - need to get all first, then paginate manually
             $query->withCount('teacherModules');
-            $teachers = $query->get()->sortBy('teacher_modules_count', SORT_REGULAR, $sortOrder === 'desc')->values();
+            $allTeachers = $query->get()->sortBy('teacher_modules_count', SORT_REGULAR, $sortOrder === 'desc')->values();
+            
+            // Manual pagination
+            $perPage = 10;
+            $currentPage = $request->get('page', 1);
+            $offset = ($currentPage - 1) * $perPage;
+            
+            $teachers = new \Illuminate\Pagination\LengthAwarePaginator(
+                $allTeachers->slice($offset, $perPage)->values(),
+                $allTeachers->count(),
+                $perPage,
+                $currentPage,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
         } else {
-            // Sort by name or email
+            // Sort by name or email with pagination
             $query->orderBy($sortBy, $sortOrder);
-            $teachers = $query->get();
+            $teachers = $query->paginate(10)->appends($request->query());
         }
 
         $modules = Module::all();
