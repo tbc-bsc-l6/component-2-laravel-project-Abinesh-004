@@ -9,6 +9,15 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        \App\Models\UserRole::create(['role' => 'student']);
+        \App\Models\UserRole::create(['role' => 'teacher']);
+        \App\Models\UserRole::create(['role' => 'admin']);
+        \App\Models\UserRole::create(['role' => 'old_student']);
+    }
+
     public function test_registration_screen_can_be_rendered(): void
     {
         $response = $this->get('/register');
@@ -26,6 +35,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('home', absolute: false));
     }
 }
