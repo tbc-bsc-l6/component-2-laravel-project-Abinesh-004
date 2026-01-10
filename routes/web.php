@@ -42,6 +42,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
     Route::get('/modules/create', [ModuleController::class, 'create'])->name('modules.create');
     Route::post('/modules', [ModuleController::class, 'store'])->name('modules.store');
+    Route::get('/modules/{module}', [ModuleController::class, 'show'])->name('modules.show');
     Route::patch('/modules/{module}/toggle', [ModuleController::class, 'toggleAvailability'])->name('modules.toggle');
     Route::delete('/modules/{module}/students', [ModuleController::class, 'removeStudent'])->name('modules.remove-student');
     

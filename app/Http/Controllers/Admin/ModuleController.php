@@ -17,6 +17,17 @@ class ModuleController extends Controller
         return view('admin.modules.index', compact('modules'));
     }
 
+    public function show(Module $module)
+    {
+        $module->loadCount(['activeStudents', 'teachers']);
+        $students = $module->enrollments()
+            ->with('user')
+            ->orderBy('enrolled_at', 'desc')
+            ->get();
+
+        return view('admin.modules.show', compact('module', 'students'));
+    }
+
     public function create()
     {
         return view('admin.modules.create');

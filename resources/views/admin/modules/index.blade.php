@@ -30,7 +30,7 @@
                     @forelse($modules as $module)
                         <tr>
                             <td>{{ $module->id }}</td>
-                            <td>{{ $module->module }}</td>
+                            <td><a href="{{ route('admin.modules.show', $module) }}" class="text-decoration-none">{{ $module->module }}</a></td>
                             <td>
                                 @if($module->is_available)
                                     <span class="badge bg-success">Available</span>

@@ -25,11 +25,11 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'user_role_id' => \App\Models\UserRole::firstOrCreate(['role' => 'student'])->id,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'user_role_id' => \App\Models\UserRole::factory(),
         ];
     }
 
