@@ -50,6 +50,15 @@
                                 <div class="card h-100 border-primary">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $enrollment->module->module }}</h5>
+                                        <p class="card-text mb-1">
+                                            <i class="bi bi-person-badge"></i> 
+                                            <strong>Teacher:</strong>
+                                            @forelse($enrollment->module->teachers as $teacher)
+                                                {{ $teacher->name }}{{ !$loop->last ? ', ' : '' }}
+                                            @empty
+                                                <span class="text-muted">Not Assigned</span>
+                                            @endforelse
+                                        </p>
                                         <p class="card-text">
                                             <i class="bi bi-calendar"></i> 
                                             Enrolled: {{ $enrollment->enrolled_at->format('M d, Y') }}

@@ -23,9 +23,9 @@ class EnrollmentController extends Controller
         $activeCount = $user->activeEnrollments()->count();
         $canEnroll = $activeCount < 4;
 
-        // Get enrolled module IDs
+        // Get enrolled or passed module IDs
         $enrolledModuleIds = $user->enrollments()
-            ->where('status', 'enrolled')
+            ->whereIn('status', ['enrolled', 'pass'])
             ->pluck('module_id')
             ->toArray();
 
@@ -84,10 +84,10 @@ class EnrollmentController extends Controller
                 ->with('error', 'This module is full. Please try again later.');
         }
 
-        // Check if already enrolled
+        // Check if already enrolled or passed
         $exists = Enrollment::where('user_id', $user->id)
             ->where('module_id', $module->id)
-            ->where('status', 'enrolled')
+            ->whereIn('status', ['enrolled', 'pass'])
             ->exists();
 
         if ($exists) {

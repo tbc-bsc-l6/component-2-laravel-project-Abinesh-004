@@ -13,7 +13,7 @@ class StudentDashboardController extends Controller
         $user = Auth::user();
 
         $activeEnrollments = $user->activeEnrollments()
-            ->with('module')
+            ->with('module.teachers')
             ->get();
 
         $completedEnrollments = $user->completedEnrollments()
