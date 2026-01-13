@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI_Usage</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        body {
+            font-family: "Jura", sans-serif;
+            width: 95vw;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .answer_required {
+            font-family: "Montserrat", sans-serif;
+            font-style: italic;
+            font-weight: 500;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        /* ai page */
+        #ai .card {
+            background-color: #e7e5e4;
+            border-radius: 4px;
+            border: 1px solid #dbdbdb;
+            color: #363636;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        #ai .card-header {
+            background-color: #57534d;
+            border-bottom: 1px solid #dbdbdb;
+            border-radius: 4px 4px 0 0;
+            color: #f1f5f9;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75em 1em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #ai .card-body {
+            padding: 1em 1em;
+            color: #4a4a4a;
+        }
+
+        #ai>h1 {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            border-bottom: #222525 2px solid;
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="ai">
+        <h1>Summary and Reflection on Artificial Intelligence (AI) Usage</h1>
+
+        <div class="card"
+            style="background-color: #fbfbfb; border-radius: 6px; border: 1px solid #dbdbdb; margin-bottom: 1.5rem; padding: 1em;">
+            <div class="card-body">
+                <p>
+                    <span class="answer_required">Please provide a list of the AI prompts used to assist
+                        in the creation of your assignment, along with a brief reflection on how the AI response
+                        helped (or not) your understanding. If you did not use AI, please state "No AI used".
+                    </span>
+                </p>
+                <p>
+                    <span class="answer_required">Please note that the list does not need to
+                        include every minor prompt, but should cover the main prompts that
+                        significantly influenced and assisted you in your assignment.
+                    </span>
+                </p>
+                <p>
+                    <span class="answer_required">Please create a new card for each prompt
+                        used, detailing the prompt, a summary of the AI's response, and your
+                        reflection on its usefulness. Please also include the date when the prompt
+                        was made.
+                    </span>
+                </p>
+                <p>
+                    <span class="answer_required">Please commit regularly to GIT -
+                        so that the date can be verified. While the exact date of the commit
+                        may not match the date of the prompt, it should be close enough to
+                        provide a reasonable estimate of when the prompt was made.
+                    </span>
+                </p>
+                <p>
+                    <span class="answer_required">Completing this
+                        page at the end will not be acceptable.
+                    </span>
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Initial Setup Card -->
+        <div class="card">
+            <div class="card-header">
+                <p>Prompt:
+                    <span style="color: #f1f5f9;">
+                        Help with initial project setup, including Laravel installation, authentication configuration,
+                        and role-based access control.
+                    </span>
+                </p>
+                <p>Date: 19-12-2025</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    The AI assisted in setting up the core Laravel project structure, configuring Breeze for
+                    authentication, and implementing the `UserRole` model and middleware to handle Admin, Teacher, and
+                    Student roles effectively. This provided a solid foundation for the entire application.
+                </p>
+            </div>
+        </div>
+
+        <!-- Unit Testing Card -->
+        <div class="card">
+            <div class="card-header">
+                <p>Prompt:
+                    <span style="color: #f1f5f9;">
+                        Assist in creating comprehensive unit and feature tests for enrollment constraints, dashboard
+                        displays, and authentication logic.
+                    </span>
+                </p>
+                <p>Date: 10-01-2026</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    The AI helped write feature tests like `ModuleEnrollmentTest` and `EnrollmentRestrictionTest`. This
+                    included testing complex logic such as limiting students to 4 modules, checking module capacity, and
+                    ensuring students cannot re-enroll in passed modules. These tests were crucial for verifying the
+                    "production-ready" state of the application.
+                </p>
+            </div>
+        </div>
+
+        <!-- Error Handling Card -->
+        <div class="card">
+            <div class="card-header">
+                <p>Prompt:
+                    <span style="color: #f1f5f9;">
+                        Debug and resolve errors related to database integrity constraints, missing model factories, and
+                        routing issues.
+                    </span>
+                </p>
+                <p>Date: 13-01-2026</p>
+            </div>
+            <div class="card-body">
+                <p>
+                    The AI identified and fixed several bugs, including `NOT NULL` constraint violations in migrations,
+                    missing factories for models, and incorrect route parameter handling. This assistance was vital in
+                    smoothing out the development process and ensuring all features functioned correctly together.
+                </p>
+            </div>
+        </div>
+
+
+
+    </section>
+</body>
+
+</html>
