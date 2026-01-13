@@ -26,6 +26,59 @@
     </div>
 </div>
 
+{{-- Search and Filter Form --}}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <form action="{{ route('teacher.modules.show', $module) }}" method="GET">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="search" class="form-label">Search Students</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="search"
+                                       name="search" 
+                                       placeholder="Search by name or email..." 
+                                       value="{{ $search }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="status" class="form-label">Filter by Status</label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="all" {{ $statusFilter === 'all' ? 'selected' : '' }}>All Students</option>
+                                <option value="enrolled" {{ $statusFilter === 'enrolled' ? 'selected' : '' }}>Enrolled Only</option>
+                                <option value="pass" {{ $statusFilter === 'pass' ? 'selected' : '' }}>Passed Only</option>
+                                <option value="fail" {{ $statusFilter === 'fail' ? 'selected' : '' }}>Failed Only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-funnel"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+                    @if($search || $statusFilter !== 'all')
+                        <div class="mt-3">
+                            <a href="{{ route('teacher.modules.show', $module) }}" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Clear Filters
+                            </a>
+                            @if($search)
+                                <span class="badge bg-info ms-2">Search: {{ $search }}</span>
+                            @endif
+                            @if($statusFilter !== 'all')
+                                <span class="badge bg-info ms-2">Status: {{ ucfirst($statusFilter) }}</span>
+                            @endif
+                        </div>
+                    @endif
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Currently Enrolled Students --}}
 <div class="row">
     <div class="col-md-12">
@@ -115,6 +168,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if($activeStudents->hasPages())
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $activeStudents->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -169,6 +227,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if($gradedStudents->hasPages())
+                    <div class="d-flex justify-content-center mt-3">
+                        {{ $gradedStudents->links() }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
