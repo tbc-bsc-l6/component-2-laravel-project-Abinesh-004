@@ -18,6 +18,6 @@ class CheckTeacher
         if (!auth()->check() || !auth()->user()->isTeacher()){
             abort(403, 'Unauthorized access');
         }
-        return $next($request);
+        return $next($request); 
     }
 }
