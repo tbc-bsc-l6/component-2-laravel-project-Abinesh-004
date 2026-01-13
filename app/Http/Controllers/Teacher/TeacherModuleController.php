@@ -23,10 +23,19 @@ class TeacherModuleController extends Controller
             abort(403, 'You are not assigned to this module');
         }
 
-        $students = $module->enrollments()
+        // Separate active and graded students
+        $activeStudents = $module->enrollments()
             ->with('user')
+            ->where('status', 'enrolled')
+            ->orderBy('enrolled_at', 'desc')
             ->get();
 
-        return view('teacher.modules.show', compact('module', 'students'));
+        $gradedStudents = $module->enrollments()
+            ->with('user')
+            ->whereIn('status', ['pass', 'fail'])
+            ->orderBy('completed_at', 'desc')
+            ->get();
+
+        return view('teacher.modules.show', compact('module', 'activeStudents', 'gradedStudents'));
     }
 }
