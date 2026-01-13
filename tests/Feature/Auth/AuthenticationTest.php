@@ -19,7 +19,10 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $role = \App\Models\UserRole::firstOrCreate(['role' => 'student']);
+        $user = User::factory()->create([
+            'user_role_id' => $role->id
+        ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
