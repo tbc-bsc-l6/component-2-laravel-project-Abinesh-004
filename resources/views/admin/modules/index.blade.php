@@ -12,7 +12,7 @@
             <i class="bi bi-plus-circle"></i> Add New Module
         </a>
     </div>
-    </div>
+
     <div class="card-body">
         <div class="mb-3">
             <form action="{{ route('admin.modules.index') }}" method="GET" class="d-flex gap-2">

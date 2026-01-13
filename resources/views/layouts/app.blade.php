@@ -37,22 +37,40 @@
     @stack('styles')
 </head>
 <body>
+    <!-- Mobile Navbar -->
+    <nav class="navbar navbar-dark bg-dark d-md-none p-3">
+        <a class="navbar-brand" href="#">CMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-2 d-md-block sidebar p-0">
-                <div class="position-sticky">
+            <!-- Sidebar (Desktop & Mobile Offcanvas) -->
+            <div class="sidebar col-md-2 d-none d-md-block p-0">
+                <div class="position-sticky" style="top: 0; height: 100vh; overflow-y: auto;">
                     <div class="text-center py-4 bg-primary text-white">
                         <h4>CMS</h4>
                         <small>{{ auth()->user()->role->role }}</small>
                     </div>
-                    
                     @include('layouts.navigation')
                 </div>
-            </nav>
+            </div>
+
+            <!-- Mobile Offcanvas Sidebar -->
+            <div class="offcanvas offcanvas-start bg-dark text-white d-md-none" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+                <div class="offcanvas-header bg-primary">
+                    <h5 class="offcanvas-title" id="sidebarMenuLabel">CMS Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body p-0">
+                    @include('layouts.navigation')
+                </div>
+            </div>
 
             <!-- Main Content -->
-            <main class="col-md-10 ms-sm-auto content-wrapper">
+            <main class="col-md-10 ms-sm-auto content-wrapper px-0">
                 <!-- Top Navigation -->
                 <div class="bg-white shadow-sm mb-4">
                     <div class="d-flex justify-content-between align-items-center p-3">

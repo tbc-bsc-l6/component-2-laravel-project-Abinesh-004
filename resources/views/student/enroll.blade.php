@@ -65,7 +65,7 @@
                     @if($availableModules->count() > 0)
                         <div class="row g-4">
                             @foreach($availableModules as $module)
-                                <div class="col-md-4">
+                                <div class="col-12 col-sm-6 col-lg-4">
                                     <div class="card h-100">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $module->module }}</h5>
